@@ -3,11 +3,10 @@ import { join, resolve } from 'path'
 
 export default createAppConfig(
 	{
-		main: resolve(join('src', 'main.js')),
+		main: resolve(join('src', 'main.ts')),
 	},
 	{
 		createEmptyCSSEntryPoints: true,
-		extractLicenseInformation: true,
-		thirdPartyLicense: false,
+		extractLicenseInformation: {},
 	},
 )
