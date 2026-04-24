@@ -5,12 +5,13 @@
 	<name>Mastermind</name>
 	<summary>Can you solve the daily Mastermind puzzle?</summary>
 	<description>Nextcloud version of the popular game Mastermind, where you have to crack a code consisting of five colors within a fixed number of turns.</description>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author mail="marc.schwartz@yard.nl">Marc Schwartz</author>
 	<namespace>Mastermind</namespace>
 	<category>games</category>
 	<bugs>https://github.com/yardinternet/nextcloud-mastermind/issues</bugs>
+	<screenshot>https://raw.githubusercontent.com/yardinternet/nextcloud-mastermind/refs/heads/main/screenshot.png</screenshot>
 	<dependencies>
 		<nextcloud min-version="33" max-version="34"/>
 	</dependencies>
