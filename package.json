@@ -25,7 +25,7 @@
     "@nextcloud/vite-config": "^2.5.2",
     "@types/node": "^25.5.0",
     "@vue/tsconfig": "^0.8.1",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vite": "^7.2.7",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-stylelint": "^6.1.0"
