@@ -12,10 +12,10 @@
 					{{ success ? '🎉' : '😞' }}
 				</div>
 				<h2 class="game-end__title">
-					{{ success ? 'You solved it!' : 'Better luck next time' }}
+					{{ success ? t('mastermind', 'You solved it!') : t('mastermind', 'Better luck next time') }}
 				</h2>
 				<p class="game-end__subtitle">
-					{{ success ? `Solved in ${guessCount} ${guessCount === 1 ? 'guess' : 'guesses'}` : 'The solution was:' }}
+					{{ success ? n('mastermind', 'Solved in %n guess', 'Solved in %n guesses', guessCount) : t('mastermind', 'The solution was:') }}
 				</p>
 				<div class="game-end__solution-row">
 					<div v-for="(digit, i) in solution"
@@ -25,10 +25,10 @@
 				</div>
 				<div class="game-end__card-actions">
 					<button type="button" @click="emit('retry')">
-						Try again
+						{{ t('mastermind', 'Try again') }}
 					</button>
 					<button type="button" @click="emit('previous')">
-						Previous puzzle
+						{{ t('mastermind', 'Previous puzzle') }}
 					</button>
 				</div>
 			</div>
@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { n, t } from '@nextcloud/l10n'
 import type { PropType } from 'vue'
 import { CHOICE_COLORS } from '../utils.ts'
 import type { CHOICE_ID } from '../utils.ts'

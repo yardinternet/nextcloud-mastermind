@@ -36,7 +36,7 @@
 		<button v-if="!solved && !failed && canSubmit"
 			class="submit-btn"
 			@click="submitGuess">
-			Submit guess
+			{{ t('mastermind', 'Submit guess') }}
 		</button>
 		<div v-else-if="!solved && !failed" class="submit-btn submit-btn--placeholder" />
 		<div v-if="pickerIndex !== null" class="color-picker" :style="pickerStyle">
@@ -61,6 +61,7 @@
 </template>
 
 <script setup lang="ts">
+import { t } from '@nextcloud/l10n'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import {
 	CELL_COLORS,

@@ -1,14 +1,14 @@
 <template>
 	<div class="how-to-play">
-		<h2>How to play?</h2>
+		<h2>{{ t('mastermind', 'How to play?') }}</h2>
 
 		<p>
-			Each day a new secret code of <strong>{{ CODE_LENGTH }} colors</strong> is generated.
-			You have <strong>{{ MAX_ATTEMPTS }} attempts</strong> to guess it.
-			After each guess, you get feedback about how close you were.
+			{{ t('mastermind', 'Each day a new secret code of {length} colors is generated.', { length: CODE_LENGTH }) }}
+			{{ t('mastermind', 'You have {attempts} attempts to guess it.', { attempts: MAX_ATTEMPTS }) }}
+			{{ t('mastermind', 'After each guess, you get feedback about how close you were.') }}
 		</p>
 
-		<h3>The colors</h3>
+		<h3>{{ t('mastermind', 'The colors') }}</h3>
 		<div class="color-palette">
 			<div v-for="(color, i) in CHOICE_COLORS"
 				:key="i"
@@ -16,31 +16,31 @@
 				:style="`background: ${color}`" />
 		</div>
 
-		<h3>Feedback</h3>
+		<h3>{{ t('mastermind', 'Feedback') }}</h3>
 		<ul class="feedback-legend">
 			<li>
 				<span class="bullet bullet--correct" />
-				<span><strong>Red bullet</strong> — right color, right position</span>
+				<span><strong>{{ t('mastermind', 'Red bullet') }}</strong> — {{ t('mastermind', 'right color, right position') }}</span>
 			</li>
 			<li>
 				<span class="bullet bullet--misplaced" />
-				<span><strong>White bullet</strong> — right color, wrong position</span>
+				<span><strong>{{ t('mastermind', 'White bullet') }}</strong> — {{ t('mastermind', 'right color, wrong position') }}</span>
 			</li>
 			<li>
 				<span class="bullet bullet--empty" />
-				<span>No bullet — color not in the solution</span>
+				<span>{{ t('mastermind', 'No bullet') }} — {{ t('mastermind', 'color not in the solution') }}</span>
 			</li>
 		</ul>
 
-		<h3>Example</h3>
-		<p>Suppose the secret code is:</p>
+		<h3>{{ t('mastermind', 'Example') }}</h3>
+		<p>{{ t('mastermind', 'Suppose the secret code is:') }}</p>
 		<div class="example-row">
 			<div v-for="(digit, i) in exampleSolution"
 				:key="'s' + i"
 				class="cell"
 				:style="`background: ${CHOICE_COLORS[digit]}`" />
 		</div>
-		<p>And you guess:</p>
+		<p>{{ t('mastermind', 'And you guess:') }}</p>
 		<div class="example-row">
 			<div v-for="(digit, i) in exampleGuess"
 				:key="'g' + i"
@@ -53,13 +53,16 @@
 			</div>
 		</div>
 		<p>
-			You get <strong>{{ exampleFeedback.correct }} red</strong>
-			and <strong>{{ exampleFeedback.misplaced }} white</strong>
+			{{ t('mastermind', 'You get {correct} red and {misplaced} white', {
+				correct: exampleFeedback.correct,
+				misplaced: exampleFeedback.misplaced,
+			}) }}
 		</p>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { t } from '@nextcloud/l10n'
 import { CHOICE_COLORS, MAX_ATTEMPTS, judgeGuess, CODE_LENGTH } from '../utils.ts'
 import type { CHOICE_ID } from '../utils.ts'
 
