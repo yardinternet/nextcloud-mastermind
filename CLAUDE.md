@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Nextcloud app called **Mastermind** — a code-breaking game. It uses a PHP backend (Nextcloud OCP AppFramework) and a Vue 3 + TypeScript frontend built with Vite.
 
-- **Nextcloud compatibility:** NC 33–34
+- **Nextcloud compatibility:** NC 33–35
 - **PHP:** 8.1+, namespace `OCA\Mastermind`
 - **Node:** v20 (see `.nvmrc`), npm 11.3+
 
@@ -16,8 +16,8 @@ This is a Nextcloud app called **Mastermind** — a code-breaking game. It uses 
 
 ```bash
 npm run build       # Production build
-npm run dev         # Development build
-npm run watch       # Watch mode
+npm run dev         # One-shot development build (no dev server / HMR)
+npm run watch       # Iterative dev: rebuilds on change
 npm run lint        # ESLint
 npm run stylelint   # CSS/SCSS linting
 ```
@@ -39,18 +39,28 @@ composer rector       # Modernize code + fix style
 ./vendor/bin/phpunit tests -c tests/phpunit.xml --filter <TestName>
 ```
 
+### Release
+
+`release.sh` builds a signed App Store tarball from a clean `git archive` of
+HEAD (uncommitted changes are ignored). It runs `npm ci && npm run build`,
+then `composer install --no-dev`, and signs with
+`$NEXTCLOUD_APP_KEY` (default `~/.nextcloud/certificates/mastermind.key`).
+Output lands in `dist/`. Bump the version in `appinfo/info.xml` before running.
+
 ## Architecture
 
 ### Backend (`lib/`)
 
 - `AppInfo/Application.php` — App bootstrap, implements `IBootstrap`
-- `Controller/PageController.php` — Renders the main SPA template via `FrontpageRoute`
-- `Controller/ApiController.php` — OCS API controller
+- `Controller/PageController.php` — Sole controller; renders the SPA template via `FrontpageRoute` at `/`
+- `appinfo/info.xml` — Authoritative source for app version and Nextcloud min/max compatibility
 
 ### Frontend (`src/`)
 
-- `main.ts` — Vue 3 app entry point, mounts to `#mastermind` DOM element
+- `main.ts` — Vue 3 app entry; mounts to `#mastermind`
 - `App.vue` — Root component
+- `components/` — `TheGame.vue`, `HowToPlay.vue`, `EndOfGameTransition.vue`
+- `styles/_game.scss` — Shared game styles
 
 ### Templates (`templates/`)
 
@@ -67,4 +77,3 @@ composer rector       # Modernize code + fix style
 - Conventional commits are enforced by CI (`block-unconventional-commits` workflow)
 - PHP code style follows `nextcloud/coding-standard` via PHP CS Fixer
 - TypeScript/Vue follows `@nextcloud/eslint-config`
-- OpenAPI spec is generated via `composer openapi` (`generate-spec`)
