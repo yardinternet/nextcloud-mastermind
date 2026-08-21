@@ -2,10 +2,10 @@
 	<NcContent app-name="mastermind">
 		<NcAppNavigation>
 			<NcAppNavigationList>
-				<NcAppNavigationItem name="How to play?"
+				<NcAppNavigationItem :name="t('mastermind', 'How to play?')"
 					:active="currentView === 'howtoplay'"
 					@click="currentView = 'howtoplay'" />
-				<NcAppNavigationCaption name="Puzzles" />
+				<NcAppNavigationCaption :name="t('mastermind', 'Puzzles')" />
 				<NcAppNavigationItem v-for="entry in navEntries"
 					:key="entry.date"
 					:name="entry.label"
@@ -16,7 +16,7 @@
 				<div class="date-picker-section">
 					<NcDateTimePickerNative v-model="pickerDate"
 						type="date"
-						label="Pick a date"
+						:label="t('mastermind', 'Pick a date')"
 						:max="new Date()" />
 				</div>
 			</template>
@@ -24,7 +24,7 @@
 		<NcAppContent>
 			<HowToPlay v-if="currentView === 'howtoplay'" />
 			<div v-else-if="isFuture" class="future-notice">
-				<p>The puzzle for {{ formatDate(selectedDate) }} is not available yet.</p>
+				<p>{{ t('mastermind', 'The puzzle for {date} is not available yet.', { date: formatDate(selectedDate) }) }}</p>
 			</div>
 			<TheGame v-else
 				:key="selectedDate"
@@ -36,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+import { t } from '@nextcloud/l10n'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
 import NcAppNavigationCaption from '@nextcloud/vue/components/NcAppNavigationCaption'
@@ -55,7 +56,11 @@ const today = toDateString(new Date())
 
 const navEntries = Array.from({ length: 10 }, (_, i) => {
 	const date = toDateString(new Date(Date.now() - i * 86_400_000))
-	const label = i === 0 ? 'Today\'s puzzle' : i === 1 ? 'Yesterday\'s puzzle' : `Puzzle of ${formatDate(date)}`
+	const label = i === 0
+		? t('mastermind', "Today's puzzle")
+		: i === 1
+			? t('mastermind', "Yesterday's puzzle")
+			: t('mastermind', 'Puzzle of {date}', { date: formatDate(date) })
 	return { date, label }
 })
 
@@ -69,7 +74,7 @@ if (!hasVisited) {
 
 const selectedTitle = computed(() => {
 	const entry = navEntries.find(e => e.date === selectedDate.value)
-	return entry ? entry.label : `Puzzle of ${formatDate(selectedDate.value)}`
+	return entry ? entry.label : t('mastermind', 'Puzzle of {date}', { date: formatDate(selectedDate.value) })
 })
 
 function selectDate(date: string) {
