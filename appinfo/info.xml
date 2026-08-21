@@ -13,7 +13,7 @@
 	<bugs>https://github.com/yardinternet/nextcloud-mastermind/issues</bugs>
 	<screenshot>https://raw.githubusercontent.com/yardinternet/nextcloud-mastermind/refs/heads/main/screenshot.png</screenshot>
 	<dependencies>
-		<nextcloud min-version="33" max-version="34"/>
+		<nextcloud min-version="33" max-version="35"/>
 	</dependencies>
 	<navigations>
 		<navigation>
